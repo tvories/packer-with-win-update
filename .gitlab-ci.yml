@@ -15,8 +15,6 @@ build:
   stage: build
   script:
     - docker build -t tpack:$PACKER_VERSION --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
-  tags:
-    - docker-builder
 
 release:
   stage: deploy
