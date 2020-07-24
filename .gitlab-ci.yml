@@ -1,0 +1,24 @@
+image: docker:git
+services:
+  - docker:dind
+
+stages:
+  - build
+  - review
+  - deploy
+
+variables:
+  PACKER_VERSION: 1.6.0
+  WIN_UPDATE_PROVISIONER_VERSION: 0.9.0
+
+build:
+  stage: build
+  script:
+    - docker build -t tpack:$PACKER_VERSION --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
+  tags:
+    - docker-builder
+
+release:
+  stage: deploy
+  script:
+    - docker --version
