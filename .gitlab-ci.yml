@@ -4,6 +4,7 @@ stages:
   - deploy
 
 variables:
+  DOCKER_TLS_CERTDIR: ""
   PACKER_VERSION: 1.6.0
   WIN_UPDATE_PROVISIONER_VERSION: 0.9.0
 
