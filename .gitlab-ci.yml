@@ -9,7 +9,7 @@ variables:
 
 build:
   stage: build
-  image: docker:latest
+  image: docker:dind
   services:
     - docker:dind
   variables:
