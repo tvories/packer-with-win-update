@@ -7,7 +7,8 @@ stages:
   - deploy
 
 variables:
-  BUILD_TAG: 1.6.0
+  LATEST_VERSION: latest
+  MAJOR_VERSION: 1.6.0
   PACKER_VERSION: 1.6.0
   DOCKER_IMAGE: packer-with-win-update
   WIN_UPDATE_PROVISIONER_VERSION: 0.9.0
@@ -15,15 +16,15 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   CI_REGISTRY_USER: tvories
   CI_REGISTRY_PASSWORD: blargington
-  CI_REGISTRY: dockerhub.com
   CI_REGISTRY_IMAGE: i${CI_REGISTRY_USER}/${DOCKER_IMAGE}
 
 
 before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
 
 build:
   stage: build
   script:
-    - docker build -t "$CI_REGISTRY_USER":"$BUILD_TAG" --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
-    - docker push "$CI_REGISTRY_USER"/"$DOCKER_IMAGE":"$BUILD_TAG"
+    - docker build -t "$CI_REGISTRY_USER":"$LATEST_VERSION" -t "$CI_REGISTRY_USER":"$MAJOR_VERSION" --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
+    - docker push "$CI_REGISTRY_USER":"$LATEST_VERSION" 
+    - docker push "$CI_REGISTRY_USER":"$MAJOR_VERSION"
