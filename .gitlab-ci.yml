@@ -15,8 +15,8 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   CI_REGISTRY_USER: tvories
   CI_REGISTRY_PASSWORD: blargington
-  CI_REGISTRY: docker.io
-  CI_REGISTRY_IMAGE: index.docker.io/${CI_REGISTRY_USER}/${DOCKER_IMAGE}
+  CI_REGISTRY: dockerhub.com
+  CI_REGISTRY_IMAGE: i${CI_REGISTRY_USER}/${DOCKER_IMAGE}
 
 
 before_script:
