@@ -7,20 +7,23 @@ stages:
   - deploy
 
 variables:
+  BUILD_TAG: 1.6.0
   PACKER_VERSION: 1.6.0
+  DOCKER_IMAGE: packer-with-win-update
   WIN_UPDATE_PROVISIONER_VERSION: 0.9.0
   DOCKER_TLS_CERTDIR: ""
   DOCKER_HOST: tcp://docker:2375
+  CI_REGISTRY_USER: tvories
+  CI_REGISTRY_PASSWORD: blargington
+  CI_REGISTRY: docker.io
+  CI_REGISTRY_IMAGE: index.docker.io/${CI_REGISTRY_USER}/${DOCKER_IMAGE}
+
 
 before_script:
-  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 build:
   stage: build
   script:
-    - docker build -t tpack:$PACKER_VERSION --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
-
-release:
-  stage: deploy
-  script:
-    - docker --version
+    - docker build -t "$CI_REGISTRY_USER":"$BUILD_TAG" --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
+    - docker push "$CI_REGISTRY_USER":"$BUILD_TAG"
