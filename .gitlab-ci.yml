@@ -26,4 +26,4 @@ build:
   stage: build
   script:
     - docker build -t "$CI_REGISTRY_USER":"$BUILD_TAG" --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
-    - docker push "$CI_REGISTRY_USER":"$BUILD_TAG"
+    - docker push "$CI_REGISTRY_USER"/"$DOCKER_IMAGE":"$BUILD_TAG"
