@@ -16,15 +16,15 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   CI_REGISTRY_USER: tvories
   CI_REGISTRY_PASSWORD: blargington
-  CI_REGISTRY_IMAGE: i${CI_REGISTRY_USER}/${DOCKER_IMAGE}
+  CI_REGISTRY_IMAGE: ${CI_REGISTRY_USER}/${DOCKER_IMAGE}
 
 
 before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+  - docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY_PASSWORD"
 
 build:
   stage: build
   script:
     - docker build -t "$CI_REGISTRY_USER":"$LATEST_VERSION" -t "$CI_REGISTRY_USER":"$MAJOR_VERSION" --build-arg PACKER_VERSION=$PACKER_VERSION --build-arg WIN_UPDATE_PROVISIONER_VERSION=$WIN_UPDATE_PROVISIONER_VERSION .
-    - docker push "$CI_REGISTRY_USER":"$LATEST_VERSION" 
-    - docker push "$CI_REGISTRY_USER":"$MAJOR_VERSION"
+    - docker push "$CI_REGISTRY_IMAGE":"$LATEST_VERSION" 
+    - docker push "$CI_REGISTRY_IMAGE":"$MAJOR_VERSION"
