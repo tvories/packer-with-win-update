@@ -6,7 +6,7 @@ It can be used the same way as the [official packer image](https://hub.docker.co
 
 ## Packer Version
 
-`1.6.0`
+`1.6.1`
 
 ## Windows Update Provisioner Version
 
