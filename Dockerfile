@@ -1,5 +1,5 @@
 # DOCKERFILE that installs packer with packer-provisioner-windows-update
-ARG PACKER_VERSION=1.6.0
+ARG PACKER_VERSION=1.6.1
 FROM hashicorp/packer:${PACKER_VERSION}
 
 ARG WIN_UPDATE_PROVISIONER_VERSION=0.9.0
