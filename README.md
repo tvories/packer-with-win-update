@@ -10,4 +10,4 @@ It can be used the same way as the [official packer image](https://hub.docker.co
 
 ## Windows Update Provisioner Version
 
-`0.9.0`
+`0.10.0`
